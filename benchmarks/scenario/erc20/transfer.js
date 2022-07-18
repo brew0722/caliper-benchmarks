@@ -1,0 +1,36 @@
+'use strict';
+const OperationBase = require('./utils/operation-base');
+const SimpleState = require('./utils/simple-state');
+/** 
+* Workload module for transferring money between accounts. 
+*/
+class Transfer extends OperationBase {
+    /** 
+    * Initializes the instance.
+    */
+    constructor() {
+        super();
+    }
+    /** 
+    * Create a pre-configured state representation. 
+    * @return {SimpleState} The state instance.
+    */
+    createSimpleState() {
+        return new SimpleState(this.moneyToTransfer);
+    }
+    /** 
+    * Assemble TXs for transferring money.
+    */
+    async submitTransaction() {
+        const transferArgs = this.simpleState.getTransferArguments();
+        await this.sutAdapter.sendRequests(this.createConnectorRequest('transfer', transferArgs));
+    }
+}
+/** 
+* Create a new instance of the workload module.  
+* @return {WorkloadModuleInterface} 
+*/
+function createWorkloadModule() {
+    return new Transfer();
+}
+module.exports.createWorkloadModule = createWorkloadModule; 

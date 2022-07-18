@@ -1,0 +1,24 @@
+{
+    "caliper": {
+        "blockchain": "ethereum"
+    },
+    "ethereum": {
+        "url": "ws://3.36.114.43:8552",
+        "contractDeployerAddress": "fc3cfe5a52b389a531baa86c45f869bfbd9799be",
+        "contractDeployerAddressPassword": "123456789",
+        "fromAddress": "fc3cfe5a52b389a531baa86c45f869bfbd9799be",
+        "fromAddressPassword": "123456789",
+        "transactionConfirmationBlocks": 1,
+        "contracts": {
+            "erc20": {
+                "path": "./src/ethereum/erc20/ERC20.json",
+                "estimateGas": true,
+                "gas": {
+                    "query": 100000,
+                    "transfer": 70000
+                }
+            }
+        }
+    }
+}
+

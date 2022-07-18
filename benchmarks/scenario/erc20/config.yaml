@@ -1,0 +1,38 @@
+simpleArgs: &simple-args
+  mintAmount: 10000000
+  mintOwner: "0xfc3cfe5a52b389a531baa86c45f869bfbd9799be"
+  moneyToTransfer: 1
+  
+
+test:
+  name: erc20
+  description: >-
+    To benchmark the network performance.
+  workers:
+    type: local
+    number: 5
+  rounds:
+    - label: mint for transfer
+      description: >-
+        minting erc20 token 
+      txNumber: 1
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 1
+      workload:
+        module: benchmarks/scenario/erc20/mint.js
+        arguments:
+          << : *simple-args
+    - label: request to 2000tps during 10s
+      description: >-
+        Transfering erc20 token 
+      txDuration: 10
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 2000
+      workload:
+        module: benchmarks/scenario/erc20/transfer.js
+        arguments:
+          << : *simple-args
